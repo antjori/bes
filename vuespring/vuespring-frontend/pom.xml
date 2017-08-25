@@ -1,0 +1,98 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>pt.devhub.antjori</groupId>
+		<artifactId>vuespring</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>vuespring-frontend</artifactId>
+	<name>VueJS Spring Boot Frontend</name>
+
+	<properties>
+		<!-- plugin versions -->
+		<frontend-maven-plugin.version>1.5</frontend-maven-plugin.version>
+
+		<!-- specific properties -->
+		<node.version>v6.11.2</node.version>
+		<npm.version>3.10.10</npm.version>
+		<node-download-root>https://nodejs.org/dist/</node-download-root>
+		<npm-download-root>http://registry.npmjs.org/npm/-/</npm-download-root>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>${frontend-maven-plugin.version}</version>
+				<executions>
+					<!-- Install our node and npm version to run npm/node scripts -->
+					<execution>
+						<id>install node and npm</id>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+						<configuration>
+							<nodeVersion>${node.version}</nodeVersion>
+							<npmVersion>${npm.version}</npmVersion>
+							<nodeDownloadRoot>${node-download-root}</nodeDownloadRoot>
+							<npmDownloadRoot>${npm-download-root}</npmDownloadRoot>
+						</configuration>
+					</execution>
+
+					<!-- Set NPM Registry -->
+					<execution>
+						<id>npm set registry</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>config set registry https://registry.npmjs.org</arguments>
+						</configuration>
+					</execution>
+
+					<!-- Set SSL privilege -->
+					<execution>
+						<id>npm set non-strict ssl</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<!-- Optional configuration which provides for running any npm command -->
+						<configuration>
+							<arguments>config set strict-ssl false</arguments>
+						</configuration>
+					</execution>
+
+					<!-- Install all project dependencies -->
+					<execution>
+						<id>npm install</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<!-- optional: default phase is "generate-resources" -->
+						<phase>generate-resources</phase>
+						<!-- Optional configuration which provides for running any npm command -->
+						<configuration>
+							<arguments>install</arguments>
+						</configuration>
+					</execution>
+
+					<!-- Build and minify static files -->
+					<execution>
+						<id>npm run build</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>run build</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
