@@ -21,11 +21,25 @@
 </template>
 
 <script>
+import HelloService from '../services/HelloService'
+
 export default {
   name: 'hello',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
+    }
+  },
+  created () {
+    console.log('Created')
+    this.getHello()
+  },
+  methods: {
+    getHello () {
+      return HelloService.get()
+        .then(result => {
+          console.log(result.bodyText)
+        })
     }
   }
 }

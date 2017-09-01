@@ -1,5 +1,6 @@
 package pt.devhub.antjori.vuespring.api;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloController {
 
-	@RequestMapping(value = "/api/hello")
+	@RequestMapping(value = "/api/hello", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String hello() {
 		return "hello";
 	}
